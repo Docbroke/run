@@ -17,7 +17,7 @@ find $(echo $PATH | tr ':' ' ') -type f -executable | sed 's/^.*\///g'
 ## make a temporary file to list all commands
 p=$(mktemp)
 ## add some personal commands first (on the top)
-cat /home/sharad/.config/shortcuts > "$p"
+cat $HOME/.config/shortcuts > "$p"
 ## add all commands from path
 path >> "$p"
 ## remove duplicates
