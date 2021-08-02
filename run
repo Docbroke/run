@@ -24,10 +24,10 @@ path >> "$p"
 removedups "$p" 
 ## choose command to execute using fzy (if run from terminal) or rofi (if run using window-manager shortcut)
 if [[ $TERM = linux && -n $DISPLAY ]]; then
-	 rofi -dmenu -font "Noto Sans Mono Medium 18" -input $p | read command
+	 rofi -dmenu -font "Noto Sans Mono Medium 18" -p "RUN THIS" -input $p | read command
 else
-	fzy < $p | read command 
-#	fzf --reverse --height 10 < $p | read command 
+#	fzy < $p | read command 
+	fzf --no-sort --reverse --height 10 --prompt "RUN THIS: " < $p | read command 
 fi
 ## run the command
 exec $command &
