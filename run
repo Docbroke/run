@@ -3,7 +3,7 @@
 shopt -s lastpipe
 ## make temporary file and copy all commands to it
 f=$(mktemp /tmp/"${0##*/}".XXXXX)
-cat $HOME/.config/shortcuts <(IFS=:; find $PATH -type f -executable -printf "%f\n" | sort -r ) | awk '!NF || !x[$0]++' > "$f"
+cat $HOME/.config/shortcuts <(IFS=:; find $PATH -executable -printf "%f\n" | sort -r ) | awk '!NF || !x[$0]++' > "$f"
 
 ## choose command to execute using fzf (if run from terminal) or rofi (if run using window-manager shortcut)
 if [[ $TERM = linux && -n $DISPLAY ]]; then
