@@ -1,0 +1,20 @@
+#!/bin/bash
+
+shopt -s lastpipe
+## make temporary file and copy all commands to it
+f=$(mktemp /tmp/"${0##*/}".XXXXX)
+cat $HOME/.config/shortcuts <(IFS=:; find $PATH -type f -executable -printf "%f\n" | sort -r ) | awk '!NF || !x[$0]++' > "$f"
+
+## choose command to execute using fzf (if run from terminal) or rofi (if run using window-manager shortcut)
+if [[ $TERM = linux && -n $DISPLAY ]]; then
+	 rofi -dmenu -font "Noto Sans Mono Medium 18" -p "RUN THIS" -input $f | read command
+else
+	fzf --border --no-sort --reverse --height 10 --prompt "RUN THIS: " < $f | read command 
+fi
+## cleanup at exit
+clean_f() {
+	[[ -f "$f" ]] && rm "$f"
+}
+trap clean_f EXIT
+## run the command
+exec $command &
