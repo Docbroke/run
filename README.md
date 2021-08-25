@@ -1,3 +1,6 @@
+EDIT: run is now part of shell-tools https://github.com/Docbroke/shell_tools
+All updates will appear there.
+
 # run
 This is menu to run your applications.
 You can run this from terminal or by keybinding.
